@@ -1,0 +1,10 @@
+app/__pycache__
+app/__pycache__/*
+.venv
+.venv/*
+.env
+start.sh
+app/exc/__pycache__/*
+app/config/__pycache__/*
+app/api/__pycache__/bean_login_api.cpython-312.pyc
+app/pyramid/__pycache__/pyramid.cpython-312.pyc
