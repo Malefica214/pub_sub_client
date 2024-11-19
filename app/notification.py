@@ -67,11 +67,26 @@ def update_state(notification_id: str, state : Literal['PENDING', 'REJECT', 'ACC
         raise Exception(status_code=404, detail="Notification not found")
     return result
 
-
+async def watch_notifications(addressee_id: str):
+    pipeline = [{"$match": {"fullDocument.addressee_id": addressee_id}}]
+    return collection.watch(pipeline=pipeline)
+    #async for change in collection.watch(pipeline=pipeline):
+    #    new_notification = change["fullDocument"]
+    #    
+    #    return {'id': str(new_notification["_id"]),
+    #            'addressee_id': new_notification["addressee_id"],
+    #            'sender_id': new_notification["sender_id"],
+    #            'type': new_notification.get("type"),
+    #            'message': new_notification["message"],
+    #            'state': new_notification["state"],
+    #            'created_at': new_notification["created_at"]}
+    
+    
+    
 
 #insert_new_notification(addressee_id='pippo', sender_id='pluto', message='hola amico', type='richiesta_collegamento')
-notifiche = get_notifiche(addressee_id='pippo')
+#notifiche = get_notifiche(addressee_id='pippo')
 #notifica = update_state(notification_id='673c99b01961eb0aceee91c8', state='ACCEPT')
-print(notifiche)
+#print(notifiche)
 
 #collection.delete_many({})
