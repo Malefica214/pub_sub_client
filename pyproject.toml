@@ -1,5 +1,5 @@
-[tool.bean_notification]
-name = "bean-notification"
-title= "Bean Notification"
-description = "Microservice for handle the notifications between users"
+[tool.bean_message]
+name = "bean-message"
+title= "Bean message"
+description = "Microservice for handle the messages between users"
 version = "0.0.0"  # Versione del software
