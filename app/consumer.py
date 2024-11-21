@@ -64,4 +64,7 @@ def start_consumer(addressee_id: str, message_type: str):
     print("Consumatore in ascolto...")
     channel.start_consuming()
      
-start_consumer(addressee_id='pina', message_type='richiesta')
+start_consumer(addressee_id='pina', message_type='love')
+
+
+

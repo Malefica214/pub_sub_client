@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Security
 import toml
 import messages
+import filter_consumer
 
 def get_app_config():
     config = toml.load("./pyproject.toml")
@@ -22,5 +23,8 @@ def health():
 
 @app.post('/send-message')
 def send_message(new_message: messages.Message):
-    messages.publish_message(message=new_message)
+    messages.publish_message(message_input=new_message)
     
+@app.get('/get-message')
+def get_message(reply_to: str):
+    filter_consumer.start_consumer(reply_to_filter=reply_to)
