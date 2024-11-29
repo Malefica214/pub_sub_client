@@ -23,13 +23,15 @@ app = FastAPI(
     version= app_config.get("version")
 )
 
-@app.get('/')
+log.info(f"Start {app_config["title"]} - Publisher")
+
+@app.get('/', tags=["Publisher"])
 def health():
     return({
         "status": "UP"
     })
 
-@app.post("/send-request")
+@app.post("/send-request", tags=["Publisher"])
 def send_request_to_queue(message: publisher.Message):
     try:
         log.debug(f"Avvio pubblicazione topic {message}")

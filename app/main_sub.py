@@ -21,6 +21,8 @@ app = FastAPI(
     version= app_config.get("version")
 )
 
+log.info(f"Start {app_config["title"]} - Subscriber")
+
 MQTT_BROKER = "127.0.0.1"
 MQTT_PORT = 9001  
 USERNAME = os.environ.get('USERNAME') or "francesca"
@@ -44,6 +46,12 @@ def on_connect(client, userdata, flags, reason_code, properties):
              user id : {userdata}
              properties: {properties}
              """)
+    
+@app.get('/', tags=["Subscriber"])
+def health():
+    return({
+        "status": "UP"
+    })
         
 @app.websocket("/ws/{user_id}")
 async def websocket_endpoint(websocket: WebSocket, user_id: str):
