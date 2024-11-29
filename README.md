@@ -14,7 +14,6 @@ Authors:
 ## Getting started
 
 You can clone this project and build your own docker image or run the service local.
-But if you prefer you can get our docker image.
 
 ## Install MQTT client - Mosquitto
 
