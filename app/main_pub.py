@@ -10,7 +10,12 @@ def get_app_config():
     config = toml.load("./pyproject.toml")
     return config["tool"]["bean_message"]
 
+def get_app_message():
+    messages = toml.load("./pyproject.toml")
+    return messages["message"]["it"]
+
 app_config = get_app_config()
+app_messages = get_app_message()
 
 app = FastAPI(
     title=app_config["title"],
@@ -31,10 +36,10 @@ def send_request_to_queue(message: publisher.Message):
                             request=message.request,
                             sender_id=message.sender_id,
                             payload=message.model_dump())
-        return JSONResponse(content={"message": "Messaggio inviato con successo"},
+        return JSONResponse(content={"message": app_messages.get("send_successfully")},
                         status_code=status.HTTP_200_OK)
     except Exception as e:
         log.error(f"Error on publish topic {e}")
-        return JSONResponse(content={"message": "Servizio momentaneamente non disponibile"},
+        return JSONResponse(content={"message":app_messages.get("service_unavailable") },
                         status_code=status.HTTP_503_SERVICE_UNAVAILABLE)
 
