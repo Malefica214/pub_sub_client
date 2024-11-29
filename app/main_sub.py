@@ -32,11 +32,11 @@ TRANSPORT = os.environ.get('TRANSPORT') or "websockets"
 connections = {}
 
 def on_message(client, userdata, msg):
-    log.info(f'Messaggio ricevuto {msg} - user_id {userdata}')
+    log.info(f'Messagge received successfully {msg} - user_id {userdata}')
     user_id = userdata
     message_data = msg.payload.decode()
     if user_id in connections:
-        log.info(f"Apertura connessione per utente {user_id}")
+        log.info(f"Open connection for user {user_id}")
         websocket = connections[user_id]
         asyncio.run(websocket.send_json(message_data))
 
@@ -55,10 +55,10 @@ def health():
         
 @app.websocket("/ws/{user_id}")
 async def websocket_endpoint(websocket: WebSocket, user_id: str):
-    log.info(f"Apertura canale websocket")
+    log.info(f"Open websocket channel")
     await websocket.accept()
     connections[user_id] = websocket
-    log.info(f"Connessione aperta {connections[user_id]}")
+    log.info(f"Open connection {connections[user_id]}")
     mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, 
                         client_id=f"client-{user_id}", 
                         transport=TRANSPORT,
@@ -69,17 +69,17 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
     mqttc.connect(MQTT_BROKER, MQTT_PORT, 60)
     
     topic = f"{user_id}/#"
-    log.info(f"Sottoscrizione al topic {toml}")
+    log.info(f"Subscribe to the topic {topic}")
     mqttc.subscribe(topic)
     mqttc.loop_start()
     
     try:
         while True:
             # Ricezione di eventuali messaggi WebSocket (es. comandi)
-            log.info(f"Ricezione messaggi testo")
+            log.info(f"Receiving text messages")
             await websocket.receive_text()
     except WebSocketDisconnect as ex:
-        log.error(f"Errore web socket {ex}")
+        log.error(f"Websocket error {ex}")
         # Cleanup
         mqttc.loop_stop()
         mqttc.disconnect()
