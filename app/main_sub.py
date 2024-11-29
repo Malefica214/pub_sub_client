@@ -28,8 +28,8 @@ app = FastAPI(
 
 log.info(f"Start {app_config['title']} - Subscriber")
 
-MQTT_BROKER = "127.0.0.1"
-MQTT_PORT = 9001  
+MQTT_BROKER = os.environ.get('MQTT_BROKER') or "127.0.0.1"
+MQTT_PORT = os.environ.get('MQTT_PORT') or 9001  
 USERNAME = os.environ.get('USERNAME') or "francesca"
 PASSWORD = os.environ.get('PASSWORD') or "francesca"
 TRANSPORT = os.environ.get('TRANSPORT') or "websockets"

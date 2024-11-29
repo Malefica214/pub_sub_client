@@ -4,9 +4,10 @@ import asyncio, websockets, json, os
     A simple script for listen websocket end point
 """
 HOST_NAME = os.environ.get('HOST_NAME') or "127.0.0.1"
+PORT = '9100'
 
 async def test_websocket_notifications(user_id:str):
-    uri = f"ws://{HOST_NAME}/ws/{user_id}"
+    uri = f"ws://{HOST_NAME}:{PORT}/ws/{user_id}"
 
     async with websockets.connect(uri) as websocket:
         print("Connected to WebSocket")
@@ -21,4 +22,4 @@ async def test_websocket_notifications(user_id:str):
             print("Error:", e)
 
 # Run test
-asyncio.run(test_websocket_notifications("f001"))
+asyncio.run(test_websocket_notifications("francesca"))
