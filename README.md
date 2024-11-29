@@ -1,4 +1,8 @@
 # Pub/Sub Client Notification
+This is a pub/sub project that can open connection for publish a message in a specific topic, the publisher in handle by an HTTP call with FastApi POST request.
+In a second moment a subscriber client can enter in a specific topic for view the queue message and precess them.
+
+The idea is that you have two users, one of this send a friend request to other, this one receive the notifications in yur dashboard and can respond.
 
 Authors:
 
