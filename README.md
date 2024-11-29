@@ -1,62 +1,88 @@
 # Pub/Sub Client Notification
-This is a pub/sub project that can open connection for publish a message in a specific topic, the publisher in handle by an HTTP call with FastApi POST request.
-In a second moment a subscriber client can enter in a specific topic for view the queue message and precess them.
 
-The idea is that you have two users, one of this send a friend request to other, this one receive the notifications in yur dashboard and can respond.
+This is a Pub/Sub project that establishes a connection to publish messages to a specific topic. The publisher is handled via an HTTP call using a FastAPI POST request.  
 
-Authors:
+Later, a subscriber client can connect to a specific topic to view the queue of messages and process them.  
 
-**Francesca Buso** - Back end software engineer
+The idea is to have two users:  
+- **User A** sends a friend request to **User B**.  
+- **User B** receives the notification on their dashboard and can respond to it.  
 
-**Francesco Pedini** - Full stack developer
+## Authors
 
+- **Francesca Buso** - Backend Software Engineer  
+- **Francesco Pedini** - Full Stack Developer  
 
-## Getting started
+---
 
-You can clone this project and build your own docker image or run the service local.
+## Getting Started
 
-## Install MQTT client - Mosquitto
+You can clone this project and build your own Docker image or run the service locally  😊.
 
-1. In a folder create subfolder for configurations, data and logs:
-    ```
+---
+
+## Installing the MQTT Client - Mosquitto
+
+1. Create subfolders for configurations, data, and logs in a directory:
+    ```bash
     sudo mkdir ./srv/mosquitto/config ./srv/mosquitto/data ./srv/mosquitto/log -p
     ```
-    I prefer to stay in the same folder of docker compose, but it's individual!
+    *(It is recommended to stay in the same folder as the Docker Compose file, but this is optional.)*
 
-2. Create the `mosquitto.conf` file, where we put all service configuration 
-    ```
+2. Create the `mosquitto.conf` file to store all service configurations:
+    ```bash
     sudo nano ./srv/mosquitto/config/mosquitto.conf
     ```
-3. In the editor put this initial configurations:
-    ```
+
+3. Add the following initial configurations in the editor:
+    ```text
     persistence true
     persistence_location /mosquitto/data/
     log_dest file /mosquitto/log/mosquitto.log
     log_dest stdout
     listener 1883
     ```
-4. Be sure to have docker installed on the pc
-5. Run container with compose file: `sudo docker compose up -d`, then you can view the logs `sudo docker compose logs -f`, the option `-f` is for stay watching logs
-6. When container run you can configure the client credentials:
-    - Enter in container with active command line
-        ```
+
+4. Ensure Docker is installed on your machine.
+
+5. Run the container using Docker Compose:
+    ```bash
+    sudo docker compose up -d
+    ```
+    To view logs, use:
+    ```bash
+    sudo docker compose logs -f
+    ```
+    *(The `-f` option keeps the log viewer active.)*
+
+6. Once the container is running, configure the client credentials:
+    - Access the container:
+        ```bash
         docker exec -it mosquitto sh
         ```
-    - Configure credentials:
+    - Configure the credentials:
+        ```bash
+        mosquitto_passwd -c /mosquitto/config/mosquitto.passwd <USERNAME>
         ```
-        mosquitto_passwd -c /mosquitto/config/mosquitto.passwd NOME_UTENTE
+    - Exit the container with the `exit` command.
+
+7. Update the `mosquitto.conf` file to include the credentials:
+    - Open the file:
+        ```bash
+        sudo nano /srv/mosquitto/config/mosquitto.conf
         ```
-    - When all ok you can exit from container with `exit` command
-7. Configure credential in the `mosquitto.conf` file:
-    - `sudo nano /srv/mosquitto/config/mosquitto.conf`
-    - Put new configuration lines:
-        ```
+    - Add the following lines:
+        ```text
         password_file /mosquitto/config/mosquitto.passwd
         allow_anonymous false
         ```
-    - Restart container: `docker container restart mosquitto`
-8. For allow the websocket port you must insert another configuration lins for open port into client container, you can edit another one time the `mosquitto.conf` file, and add this configuration:
-    ```
+    - Restart the container:
+        ```bash
+        docker container restart mosquitto
+        ```
+
+8. To allow WebSocket connections, add the following lines to the `mosquitto.conf` file:
+    ```text
     listener 9001
     protocol websockets
     ```
