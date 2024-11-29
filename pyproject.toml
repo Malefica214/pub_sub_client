@@ -2,7 +2,7 @@
 name = "bean-message"
 title= "Bean message"
 description = "Microservice for handle the messages between users"
-version = "0.0.0"  # Versione del software
+version = "0.0.1"  # Versione del software
 
 [message.it]
 
