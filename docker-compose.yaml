@@ -1,17 +1,21 @@
 services:
 
   publisher:
-    image: registry.gitlab.com/bean3692021/bean-notification:test_latest
+    image: pub_sub_def:latest
     ports:
       - "8000:8000"
     environment:
       HOST_NAME: 192.168.92.51
+      MQTT_BROKER: 192.168.92.51
+      MQTT_PORT: 9001
     command: fastapi run app/main_pub.py --host 0.0.0.0 --port 8000
 
   subscriber:
-    image: registry.gitlab.com/bean3692021/bean-notification:test_latest
+    image: pub_sub_def:latest
     ports:
       - "9100:9100"
     environment:
-      HOST_NAME: 192.168.92.51
+       HOST_NAME: 192.168.92.51
+       MQTT_BROKER: 192.168.92.51
+       MQTT_PORT: 9001
     command: fastapi run app/main_sub.py --host 0.0.0.0 --port 9100
