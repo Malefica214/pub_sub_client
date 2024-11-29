@@ -43,7 +43,7 @@ def send_request_to_queue(message: publisher.Message):
                             request=message.request,
                             sender_id=message.sender_id,
                             payload=message.model_dump())
-        log.inf(f"Successful publication")
+        log.info(f"Successful publication")
         return JSONResponse(content={"message": app_messages.get("send_successfully")},
                             status_code=status.HTTP_200_OK)
     except Exception as e:
