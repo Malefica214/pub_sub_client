@@ -86,3 +86,15 @@ You can clone this project and build your own Docker image or run the service lo
     listener 9001
     protocol websockets
     ```
+
+9. Environment variable
+# Variabili d'Ambiente
+
+| Variabile          | Tipo      | Default         | Descrizione                                                                 |
+|--------------------|-----------|-----------------|-----------------------------------------------------------------------------|
+| `MQTT_BROKER` | `string`  | `127.0.0.1`     | The address of the MQTT broker to connect to.                                |
+| `MQTT_PORT` | `integer` | `9001`          | Port on which the MQTT broker is listening.                                   |
+| `USERNAME`    | `string`  | `""` (vuoto)    | Username for authentication to the MQTT broker (if required).         |
+| `PASSWORD`    | `string`  | `""` | Password configured in `mosquitto.password` file
+| `TRANSPORT`   | `string`  | `"websockets"` | Type of connection of subscriber host
+ 
