@@ -1,7 +1,7 @@
 services:
 
   publisher:
-    image: pub_sub:6
+    image: registry.gitlab.com/bean3692021/bean-notification:test_latest
     ports:
       - "8000:8000"
     environment:
@@ -9,7 +9,7 @@ services:
     command: fastapi run app/main_pub.py --host 0.0.0.0 --port 8000
 
   subscriber:
-    image: pub_sub:6
+    image: registry.gitlab.com/bean3692021/bean-notification:test_latest
     ports:
       - "9100:9100"
     environment:
