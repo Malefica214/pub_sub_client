@@ -4,6 +4,10 @@ import toml
 import publisher
 import logger
 
+"""
+End Point for publish notification in a MQTT client
+"""
+
 log = logger.setup_logger()
 
 def get_app_config():
@@ -34,12 +38,12 @@ def health():
 @app.post("/send-request", tags=["Publisher"])
 def send_request_to_queue(message: publisher.Message):
     try:
-        log.debug(f"Avvio pubblicazione topic {message}")
+        log.debug(f"Start publishing topics {message}")
         publisher.send_request(addresses_id=message.addresses_id,
                             request=message.request,
                             sender_id=message.sender_id,
                             payload=message.model_dump())
-        log.inf(f"Pubblicazione avvenuta con successo")
+        log.inf(f"Successful publication")
         return JSONResponse(content={"message": app_messages.get("send_successfully")},
                             status_code=status.HTTP_200_OK)
     except Exception as e:

@@ -1,23 +1,24 @@
-import asyncio
-import websockets
-import json
+import asyncio, websockets, json, os
+
+"""
+    A simple script for listen websocket end point
+"""
+HOST_NAME = os.environ.get('HOST_NAME') or "127.0.0.1"
 
 async def test_websocket_notifications(user_id:str):
-    # URL del tuo endpoint WebSocket
-    uri = f"ws://127.0.0.1:8000/ws/{user_id}"
+    uri = f"ws://{HOST_NAME}/ws/{user_id}"
 
     async with websockets.connect(uri) as websocket:
-        print("Connesso al WebSocket")
+        print("Connected to WebSocket")
         try:
             while True:
-                # Ricevi notifiche dal server
                 message = await websocket.recv()
-                print("Notifica ricevuta:", json.dumps(message))
+                print("Notification received:", json.dumps(message))
         except websockets.ConnectionClosed as ex:
             print(ex)
-            print("Connessione chiusa dal server")
+            print("Connection closed by server")
         except Exception as e:
-            print("Errore:", e)
+            print("Error:", e)
 
-# Esegui il test
+# Run test
 asyncio.run(test_websocket_notifications("f001"))

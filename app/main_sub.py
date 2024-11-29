@@ -2,6 +2,11 @@ from fastapi import FastAPI, Security, WebSocket, WebSocketDisconnect
 import toml, logger, asyncio, os
 import paho.mqtt.client as mqtt
 
+"""
+End Point for open a client and listen the sender message 
+in a specific topic link to the user or other reason
+"""
+
 log = logger.setup_logger()
 
 def get_app_config():
