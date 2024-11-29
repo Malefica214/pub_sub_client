@@ -2,9 +2,9 @@ import asyncio
 import websockets
 import json
 
-async def test_websocket_notifications():
+async def test_websocket_notifications(user_id:str):
     # URL del tuo endpoint WebSocket
-    uri = "ws://127.0.0.1:8000/ws/pippo"
+    uri = f"ws://127.0.0.1:8000/ws/{user_id}"
 
     async with websockets.connect(uri) as websocket:
         print("Connesso al WebSocket")
@@ -12,8 +12,7 @@ async def test_websocket_notifications():
             while True:
                 # Ricevi notifiche dal server
                 message = await websocket.recv()
-                data = json.loads(message)
-                print("Notifica ricevuta:", data)
+                print("Notifica ricevuta:", json.dumps(message))
         except websockets.ConnectionClosed as ex:
             print(ex)
             print("Connessione chiusa dal server")
@@ -21,4 +20,4 @@ async def test_websocket_notifications():
             print("Errore:", e)
 
 # Esegui il test
-asyncio.run(test_websocket_notifications())
+asyncio.run(test_websocket_notifications("f001"))

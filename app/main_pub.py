@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Security
 import toml
-import messages
-import filter_consumer
+import publisher
 
 def get_app_config():
     config = toml.load("./pyproject.toml")
@@ -21,3 +20,9 @@ def health():
         "status": "UP"
     })
 
+@app.post("/send-request")
+def send_request_to_queue(message: publisher.Message):
+    publisher.send_request(addresses_id=message.addresses_id,
+                           request=message.request,
+                           sender_id=message.sender_id,
+                           payload=message.model_dump())
