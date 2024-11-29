@@ -2,7 +2,9 @@ from fastapi import FastAPI, Security, WebSocket, WebSocketDisconnect
 import toml
 import paho.mqtt.client as mqtt
 import asyncio
-import json
+import logger
+
+log = logger.setup_logger()
 
 def get_app_config():
     config = toml.load("./pyproject.toml")

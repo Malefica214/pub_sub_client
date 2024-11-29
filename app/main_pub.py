@@ -1,6 +1,9 @@
 from fastapi import FastAPI, Security
 import toml
 import publisher
+import logger
+
+log = logger.setup_logger()
 
 def get_app_config():
     config = toml.load("./pyproject.toml")
