@@ -27,7 +27,7 @@ app = FastAPI(
     version= app_config.get("version")
 )
 
-log.info(f"Start {app_config["title"]} - Publisher")
+log.info(f"Start {app_config['title']} - Publisher")
 
 @app.get('/', tags=["Publisher"])
 def health():

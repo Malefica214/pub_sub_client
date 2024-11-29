@@ -26,7 +26,7 @@ app = FastAPI(
     version= app_config.get("version")
 )
 
-log.info(f"Start {app_config["title"]} - Subscriber")
+log.info(f"Start {app_config['title']} - Subscriber")
 
 MQTT_BROKER = "127.0.0.1"
 MQTT_PORT = 9001  
