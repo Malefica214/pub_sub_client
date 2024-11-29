@@ -32,14 +32,16 @@ def health():
 @app.post("/send-request")
 def send_request_to_queue(message: publisher.Message):
     try:
+        log.debug(f"Avvio pubblicazione topic {message}")
         publisher.send_request(addresses_id=message.addresses_id,
                             request=message.request,
                             sender_id=message.sender_id,
                             payload=message.model_dump())
+        log.inf(f"Pubblicazione avvenuta con successo")
         return JSONResponse(content={"message": app_messages.get("send_successfully")},
-                        status_code=status.HTTP_200_OK)
+                            status_code=status.HTTP_200_OK)
     except Exception as e:
         log.error(f"Error on publish topic {e}")
         return JSONResponse(content={"message":app_messages.get("service_unavailable") },
-                        status_code=status.HTTP_503_SERVICE_UNAVAILABLE)
+                            status_code=status.HTTP_503_SERVICE_UNAVAILABLE)
 
